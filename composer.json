@@ -1,0 +1,18 @@
+{
+    "name": "wp-china/wp-china-api",
+    "description": "",
+    "authors": [
+        {
+            "name": "WP-China",
+            "email": "admin@wp-china.org"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "WPChina\\WPChinaAPI\\": "src"
+        }, "files": [
+            "src/Common.php"
+        ]
+    }
+}
