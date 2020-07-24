@@ -13,10 +13,10 @@
     function add_trans_update_info(WP_REST_Request $request, $body, $type) {
         global $wpdb;
 
-        $request_plugins = json_decode($request->get_body_params()[$type.'s'], true)[$type.'s'];
+        $request_objects = json_decode($request->get_body_params()[$type.'s'], true)[$type.'s'];
         $request_translations = json_decode($request->get_body_params()['translations'], true);
         $translations_updated = [];
-        foreach ($request_plugins as $name => $meta) {
+        foreach ($request_objects as $name => $meta) {
             $slug = explode('/', $name)[0];
             $parent_project_id = $type == 'plugin' ? 1 : 2;
             $project = $wpdb->get_row($wpdb->prepare('select id from wp_4_gp_projects where `parent_project_id`=%d and `slug`=%s;', [$parent_project_id, $slug]));
