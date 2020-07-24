@@ -115,7 +115,12 @@
                 }
             }
 
-            if (empty($request_translation_update_time) || strtotime($db_translations['updated']) > strtotime($request_translation_update_time)) {
+            if ($request_translation_update_time == '+0000' || empty($request_translation_update_time)) {
+                if (version_compare($project_version, $meta['Version'])) {
+                    $translations_updated = array_merge($translations_updated, [$db_translations]);
+                }
+            }
+            else if (strtotime($db_translations['updated']) > strtotime($request_translation_update_time)) {
                 $translations_updated = array_merge($translations_updated, [$db_translations]);
             }
         }
