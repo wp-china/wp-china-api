@@ -117,7 +117,7 @@
             }
 
             if ($request_translation_update_time == '+0000') {
-                if (version_compare($project_version, $meta['Version'])) {
+                if (version_compare($project_version, $meta['Version'], '>')) {
                     $translations_updated = array_merge($translations_updated, [$db_translations]);
                 }
             }
