@@ -18,6 +18,7 @@
         $translations_updated = [];
         foreach ($request_objects as $name => $meta) {
             $slug = explode('/', $name)[0];
+            $text_domain = $meta['TextDomain'];
             $parent_project_id = $type == 'plugin' ? 1 : 2;
             $project = $wpdb->get_row($wpdb->prepare('select id from wp_4_gp_projects where `parent_project_id`=%d and `slug`=%s;', [$parent_project_id, $slug]));
             if (empty($project->id)) { // 项目ID为空的，说明是用户安装了但是翻译平台未翻译，需要加入到队列中进行Get请求，相当于是强制给缓存到云存储上，等着更新监控程序监测到后去走一遍生成语言包的流程
@@ -108,10 +109,10 @@
              }
              */
             $request_translation_update_time = null;
-            if (key_exists($slug, $request_translations)) {
-                if (key_exists('zh_CN', $request_translations[$slug])) {
-                    if (key_exists('PO-Revision-Date', $request_translations[$slug]['zh_CN'])) {
-                        $request_translation_update_time = $request_translations[$slug]['zh_CN']['PO-Revision-Date'];
+            if (key_exists($text_domain, $request_translations)) {
+                if (key_exists('zh_CN', $request_translations[$text_domain])) {
+                    if (key_exists('PO-Revision-Date', $request_translations[$text_domain]['zh_CN'])) {
+                        $request_translation_update_time = $request_translations[$text_domain]['zh_CN']['PO-Revision-Date'];
                     }
                 }
             }
